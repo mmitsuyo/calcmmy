@@ -91,7 +91,7 @@ my.normalize <- function(x,FUN2="mean",...){
   sweep(x,2,apply(x,2,tmpfunc,...),FUN="/")
 }
 
-#'3. Further interace to get result of Clark (1991)
+#'3. Further interface to get result of Clark (1991)
 #' 
 #' @export
 get.clark.data2 <- function(bpara, SR.coef=c(0.750,0.875,0.938,1.386,2.079,2.773),is.ricker=c(F,F,F,T,T,T),f.vec=seq(from=0,to=1,by=0.01),is.graph=F,steepness){
