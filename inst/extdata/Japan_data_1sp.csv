@@ -1,0 +1,17 @@
+Age,waa,maa,M,F,Stock,Reference,Order,Family,Genus,Species,Max_age
+1,0.094,0,0.4,0.04,Masaba-PA,201905,Perciformes,Scombridae,Scomber,japonicus,8
+2,0.202,0,0.4,0.14,Masaba-PA,201905,Perciformes,Scombridae,Scomber,japonicus,8
+3,0.264,0.2,0.4,0.29,Masaba-PA,201905,Perciformes,Scombridae,Scomber,japonicus,8
+4,0.316,0.8,0.4,0.53,Masaba-PA,201905,Perciformes,Scombridae,Scomber,japonicus,8
+5,0.349,1,0.4,0.55,Masaba-PA,201905,Perciformes,Scombridae,Scomber,japonicus,8
+6,0.529,1,0.4,1,Masaba-PA,201905,Perciformes,Scombridae,Scomber,japonicus,8
+7,0.645,1,0.4,1,Masaba-PA,201905,Perciformes,Scombridae,Scomber,japonicus,8
+8,0.645,1,0.4,1,Masaba-PA,201905,Perciformes,Scombridae,Scomber,japonicus,8
+9,0.645,1,0.4,1,Masaba-PA,201905,Perciformes,Scombridae,Scomber,japonicus,8
+1,0.243,0,0.4,0.31,Masaba-EC,201906,Perciformes,Scombridae,Scomber,japonicus,6
+2,0.33,0.6,0.4,1,Masaba-EC,201906,Perciformes,Scombridae,Scomber,japonicus,6
+3,0.478,0.8,0.4,0.65,Masaba-EC,201906,Perciformes,Scombridae,Scomber,japonicus,6
+4,0.619,1,0.4,0.65,Masaba-EC,201906,Perciformes,Scombridae,Scomber,japonicus,6
+5,0.619,1,0.4,0.65,Masaba-EC,201906,Perciformes,Scombridae,Scomber,japonicus,6
+6,0.619,1,0.4,0.65,Masaba-EC,201906,Perciformes,Scombridae,Scomber,japonicus,6
+7,0.619,1,0.4,0.65,Masaba-EC,201906,Perciformes,Scombridae,Scomber,japonicus,6

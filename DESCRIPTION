@@ -1,0 +1,27 @@
+Package: calcmmy
+Title: Provides %SPR for maximum minimum yield (MMY) 
+Version: 0.0.0.9000
+Authors@R: 
+    c(person("Mitsuyo", "Miyagawa", , "miyagawa_mitsuyo88@fra.go.jp", role = c("aut", "cre")),
+	  person("Momoko", "Ichinokawa", , "ichinokawa_momoko09@fra.go.jp", role = c("aut")))
+Description: Calculates maximum minimum yield (MMY) related statistics for different steepness scenarios.
+License: Apache Licence 2.0
+Encoding: UTF-8
+LazeData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.1
+Imports:
+    devtools (>= 2.4.4),
+    dplyr (>= 1.1.2),
+    FishLife (>= 2.0.1),
+    ggplot2 (>= 3.4.2),
+    tidyr (>= 1.3.0),
+	readr,
+	magrittr,
+	purrr,
+	stringr
+Suggests: 
+    knitr
+Depends: 
+    R (>= 2.10)
+
