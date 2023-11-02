@@ -12,7 +12,7 @@ NULL
 #' 1. Calculate spr, spr0, ypr by age ---
 #' 
 #' @export
-cal.SPRetc3 <- function(age,waa,maa,M,F,waa.mid,maa.mid,init.num=1){
+cal.SPRetc3 <- function(age,waa,maa,M,F,waa.mid,maa.mid,init.num=1,plus=TRUE){
   if(min(age)==1){
     res <- data.frame(age=age,waa=waa,maa=maa,M=M,F=F,waa.mid=waa.mid,maa.mid=maa.mid)
   }
@@ -32,6 +32,24 @@ cal.SPRetc3 <- function(age,waa,maa,M,F,waa.mid,maa.mid,init.num=1){
   #res$maa.mid <- (res$maa+c(res$maa[-1],rev(res$maa)[1]))/2 
   
   res$remain.n <- res$remain.n0 <-  res$fished.n <- 0 
+  
+  if(isTRUE(plus)){ # for stocks with plus-group
+  res$remain.n <- res$remain.n0 <-  res$fished.n <- 0 
+  for(i in 1:nrow(res)-1){
+      res$remain.n[i] <- exp(-sum(M[1:i])-sum(F[1:i])) 
+      res$remain.n0[i] <- exp(-sum(M[1:i]))
+  }
+      res$remain.n[nrow(res)] <- exp(-sum(M[1:nrow(res)])-sum(F[1:nrow(res)])) * (1-exp(-((Inf-0)-(nrow(res)-2))*(M[nrow(res)]+F[nrow(res)])))/(1-exp(-M[nrow(res)]-F[nrow(res)])) 
+	  
+      res$remain.n0[nrow(res)] <- exp(-sum(M[1:nrow(res)])) * (1-exp(-((Inf-0)-(nrow(res)-2))*(M[nrow(res)]+0)))/(1-exp(-M[nrow(res)]-0))
+  
+  for(i in 2:nrow(res)-1){
+      res$fished.n[i] <- #F[i]/(F[i]+M[i]) * (1-exp(-F[i]-M[i])) * res$remain.n[i-1]
+        F[i]/(F[i]+M[i]) * (1-exp(-F[i]-M[i])) * exp(-sum(M[1:(i-1)])-sum(F[1:(i-1)]))
+  }
+      res$fished.n[nrow(res)] <- F[nrow(res)]/(F[nrow(res)]+M[nrow(res)]) * (1-exp(-F[nrow(res)]-M[nrow(res)])) *exp(-sum(M[1:nrow(res)])-sum(F[1:nrow(res)])) * (1-exp(-((Inf-0)-(nrow(res)-2))*(M[nrow(res)]+F[nrow(res)])))/(1-exp(-M[nrow(res)]-F[nrow(res)]))
+  }
+  else{# for stocks with NO plus-group
   for(i in 1:nrow(res)){
     res$remain.n[i] <- exp(-sum(M[1:i])-sum(F[1:i])) # survival number at age 生残率
     res$remain.n0[i] <- exp(-sum(M[1:i]))
@@ -43,6 +61,7 @@ cal.SPRetc3 <- function(age,waa,maa,M,F,waa.mid,maa.mid,init.num=1){
   for(i in 2:nrow(res)){
     res$fished.n[i] <- #F[i]/(F[i]+M[i]) * (1-exp(-F[i]-M[i])) * res$remain.n[i-1]
       F[i]/(F[i]+M[i]) * (1-exp(-F[i]-M[i])) * exp(-sum(M[1:(i-1)])-sum(F[1:(i-1)]))
+  }
   }
   
   res$ssb.w <- res$remain.n * res$maa.mid * res$waa.mid # spr by age
@@ -56,10 +75,10 @@ cal.SPRetc3 <- function(age,waa,maa,M,F,waa.mid,maa.mid,init.num=1){
 #' 2. Calculate spr, spr0, ypr, yield for the stock ---
 #' 
 #' @export
-calYPR.simple2 <- function(waa,maa,M,F,Fmulti,age,waa.mid,maa.mid,SR.coef=1,is.ricker=F,steepness=1){
+calYPR.simple2 <- function(waa,maa,M,F,Fmulti,age,waa.mid,maa.mid,SR.coef=1,is.ricker=F,steepness=1,plus){
   ypr <- spr <- spr0 <- rep(0,length(Fmulti))
   for(i in 1:length(Fmulti)){
-    res <- cal.SPRetc3(waa=waa,maa=maa,M=M,F=F*Fmulti[i],age=age,waa.mid=waa.mid,maa.mid=maa.mid) 
+    res <- cal.SPRetc3(waa=waa,maa=maa,M=M,F=F*Fmulti[i],age=age,waa.mid=waa.mid,maa.mid=maa.mid,plus=plus) 
     ypr[i] <- sum(res$fished.w,na.rm=T) # ypr for stock: equation 2 in paper
     spr[i] <- sum(res$ssb.w,na.rm=T)# spr for stock: equation 6.1 in paper 
     spr0[i] <- sum(res$ssb0.w,na.rm=T)# spr0 (no fishing) for stock 
@@ -101,7 +120,7 @@ get.clark.data2 <- function(bpara, SR.coef=c(0.750,0.875,0.938,1.386,2.079,2.773
   for(i in 1:length(SR.coef)){
     res <- calYPR.simple2(waa=bpara$waa,maa=bpara$maa,M=bpara$M,F=bpara$F,age=bpara$Age,
                           waa.mid=bpara$waa.mid,maa.mid=bpara$maa.mid,
-                          Fmulti=f.vec,SR.coef=SR.coef[i],is.ricker=is.ricker[i],steepness=steepness[i])
+                          Fmulti=f.vec,SR.coef=SR.coef[i],is.ricker=is.ricker[i],steepness=steepness[i],plus=bpara$plus[1])
     mat.tmp[,i] <- res$ab.yield
     mat.relativeS[,i] <- res$SperS0
     RperR0[,i] <- res$RperR0
