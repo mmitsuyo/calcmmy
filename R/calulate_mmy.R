@@ -232,7 +232,7 @@ get.clark.data2 <- function(bpara, SR.coef=c(0.750,0.875,0.938,1.386,2.079,2.773
   
   #invisible(list(c(f.max,f.mmy,spr.mmy,spr.max),cbind(f.vec,x,x0),res,mat.tmp,mat.relativeS,mat.relativeS,RperR0,one_Abr,tameshi))
   
-  c(f.max,spr.mmy,f.mmy,F_Ymax,SPR_Ymax,mmy_MSY_Yloss,sango_MSY_Yloss,yonjyu_MSY_Yloss,steepness)
+  c(f.max,spr.mmy*100,f.mmy,F_Ymax,SPR_Ymax*100,mmy_MSY_Yloss,sango_MSY_Yloss,yonjyu_MSY_Yloss,steepness)
 }
 #----------------------------------------------------------------------------------------------------------
 #' @export
